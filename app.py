@@ -5,17 +5,11 @@ import os
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f"mysql+pymysql://{os.getenv('MYSQLUSER')}:"
-    f"{os.getenv('MYSQLPASSWORD')}@"
-    f"{os.getenv('MYSQLHOST')}:"
-    f"{os.getenv('MYSQLPORT')}/"
-    f"{os.getenv('MYSQLDATABASE')}"
-)
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
 
 class Todo(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
