@@ -5,9 +5,17 @@ import os
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+database_url = os.getenv("DATABASE_URL")
 
+if database_url.startswith("mysql://"):
+    database_url = database_url.replace(
+        "mysql://",
+        "mysql+pymysql://",
+        1
+    )
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
