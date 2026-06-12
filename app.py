@@ -70,8 +70,10 @@ def delete(sno):
 
 
 with app.app_context():
-    db.create_all()
-    
+    try:
+        db.create_all()
+    except Exception as e:
+        print("Database Error:", e)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
