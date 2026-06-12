@@ -27,9 +27,6 @@ class Todo(db.Model):
         return f"{self.sno} - {self.title}"
 
 
-with app.app_context():
-    db.create_all()
-    
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
@@ -70,6 +67,11 @@ def delete(sno):
     db.session.delete(todo)
     db.session.commit()
     return redirect("/")
+
+
+with app.app_context():
+    db.create_all()
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
